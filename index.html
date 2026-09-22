@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doki Doki Literature Club! 🌸</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <canvas id="interactive-bg"></canvas>
+
+    <header>
+        <div class="logo">💖 Doki Doki Literature Club!</div>
+        <nav>
+            <a href="#" onclick="showSection('home')">Home</a>
+            <a href="#" onclick="showSection('poems')">Poems</a>
+            <a href="#" onclick="showSection('members')">Members</a>
+            <div id="auth-nav-slot"></div>
+        </nav>
+    </header>
+
+    <main id="section-landing">
+        <div class="hero-content">
+            <h1>Write your way into <span>their hearts</span>! 🌸</h1>
+            <p>Welcome to the Literature Club! It's always been a dream of mine to make something special out of the things I love. Every day is full of chit-chat and fun activities with all of my adorable and unique club members!</p>
+            
+            <div class="poem-box">
+                "The happiness I found inside,<br>
+                Is shared with every word I write.<br>
+                Will you write a poem for me?"
+            </div>
+        </div>
+
+        <div class="card-form" id="card-register">
+            <h2 id="form-title">Club Registration 📝</h2>
+            <form id="auth-form" onsubmit="handleAuth(event)">
+                <div class="input-group" id="group-name">
+                    <label for="nama">Nama Anggota Baru</label>
+                    <input type="text" id="nama" placeholder="Enter your name...">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="NPC@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn" id="form-submit-btn">Join The Club ✨</button>
+            </form>
+            <div class="switch-auth" id="switch-text">
+                Already registered? <a href="#" onclick="toggleAuthMode(event, 'login')">Log in here!</a>
+            </div>
+        </div>
+    </main>
+
+    <main id="section-main" class="hidden" style="grid-template-columns: 1fr; text-align: center;">
+        <div class="hero-content" style="max-width: 900px; margin: 0 auto;">
+            <h1 id="welcome-user">Hello, Welcome! 🌸</h1>
+            <p>You have successfully entered the exclusive area of Doki Doki Literature Club. Enjoy your days with the literature club and share your best poetry today!</p>
+            
+            <div class="chibi-container">
+                <div class="chibi-card">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35c4040c774ee_Monika-Chibi-HC.png" alt="Monika Chibi">
+                    <span>Monika</span>
+                </div>
+                <div class="chibi-card">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35ca460c774e8_Sayori-Chibi-HC.png" alt="Sayori Chibi">
+                    <span>Sayori</span>
+                </div>
+                <div class="chibi-card">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35c3caec774e7_60928826b02a9e0b6966f7fb_Natsuki-Chibi-HC.png" alt="Natsuki Chibi">
+                    <span>Natsuki</span>
+                </div>
+                <div class="chibi-card">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35c1b60c774ed_6092882619f6a3604273e2c8_Yuri-Chibi-HC.png" alt="Yuri Chibi">
+                    <span>Yuri</span>
+                </div>
+            </div>
+
+            <div class="poem-box" style="text-align: left; margin: 2rem auto;">
+                "Today is a wonderful day to write a poem.<br>
+                Every choice you make shapes the future of our club.<br>
+                Have fun exploring, Member-san! ✨"
+            </div>
+
+            <button class="submit-btn" style="max-width: 300px; margin: 2rem auto 0 auto;" onclick="handleLogout()">Exit (Log Out)</button>
+        </div>
+    </main>
+
+    <main id="section-poems" class="hidden" style="grid-template-columns: 1fr;">
+        <div class="hero-content" style="max-width: 1000px; margin: 0 auto; text-align: center;">
+            <h1 style="font-size: 2.8rem;">📖 Club's Poem Collection 📖</h1>
+            <p>Koleksi gambar puisi resmi dari para anggota klub atau karya tulisanmu sendiri!</p>
+            
+            <div class="card-form" style="margin-top: 2rem; margin-bottom: 3rem; text-align: left;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Buat Puisi Barumu ✍️</h2>
+                <form onsubmit="handleUploadPoem(event)">
+                    <div class="input-group">
+                        <label for="new-poem-title">Judul Puisi</label>
+                        <input type="text" id="new-poem-title" placeholder="Contoh: Bunga Sakura Terakhir..." required>
+                    </div>
+                    <div class="input-group">
+                        <label for="new-poem-author">Nama Pembuat / Author</label>
+                        <input type="text" id="new-poem-author" placeholder="Contoh: Member-san..." required>
+                    </div>
+                    <div class="input-group">
+                        <label for="new-poem-content">Isi Puisi</label>
+                        <textarea id="new-poem-content" rows="5" placeholder="Tulis baris puisimu di sini..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Upload Puisi ✨</button>
+                </form>
+            </div>
+
+            <div class="poems-grid" id="poems-grid-container">
+            </div>
+        </div>
+    </main>
+
+    <main id="section-members" class="hidden" style="grid-template-columns: 1fr;">
+        <div class="hero-content" style="max-width: 1000px; margin: 0 auto; text-align: center;">
+            <h1 style="font-size: 2.8rem;">🌸 Club Members 🌸</h1>
+            <p>Click on one of the members below to view their full profiles!</p>
+            
+            <div class="members-grid">
+                <div class="member-item-card" onclick="openMemberModal('monika')">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35c4040c774ee_Monika-Chibi-HC.png" alt="Monika Chibi">
+                    <h3 style="color: var(--ddlc-deep-pink); font-size: 1.3rem;">Monika</h3>
+                    <span style="font-size: 0.85rem; color: rgb(79, 184, 58); font-weight: 700;">Club President</span>
+                </div>
+                <div class="member-item-card" onclick="openMemberModal('sayori')">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35ca460c774e8_Sayori-Chibi-HC.png" alt="Sayori Chibi">
+                    <h3 style="color: var(--ddlc-deep-pink); font-size: 1.3rem;">Sayori</h3>
+                    <span style="font-size: 0.85rem; color: hsl(207, 81%, 61%); font-weight: 700;">Bundle Of Sunshine</span>
+                </div>
+                <div class="member-item-card" onclick="openMemberModal('natsuki')">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35c3caec774e7_60928826b02a9e0b6966f7fb_Natsuki-Chibi-HC.png" alt="Natsuki Chibi">
+                    <h3 style="color: var(--ddlc-deep-pink); font-size: 1.3rem;">Natsuki</h3>
+                    <span style="font-size: 0.85rem; color: #d81b60; font-weight: 700;">Cute On The Outside</span>
+                </div>
+                <div class="member-item-card" onclick="openMemberModal('yuri')">
+                    <img src="https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35c1b60c774ed_6092882619f6a3604273e2c8_Yuri-Chibi-HC.png" alt="Yuri Chibi">
+                    <h3 style="color: var(--ddlc-deep-pink); font-size: 1.3rem;">Yuri</h3>
+                    <span style="font-size: 0.85rem; color: hsl(273, 62%, 56%); font-weight: 700;">Maiden Of Mystery</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="member-modal" class="modal-overlay hidden" onclick="closeMemberModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal-btn" onclick="closeMemberModalDirect()">&times;</button>
+            <div class="modal-image-side">
+                <img id="modal-art" src="" alt="Full Artwork">
+            </div>
+            <div class="modal-info-side">
+                <h2 id="modal-name">Nama Anggota</h2>
+                <span id="modal-role" class="modal-role">Peran</span>
+                <p id="modal-description" class="modal-desc">Deskripsi singkat karakter akan muncul di sini.</p>
+                <button class="submit-btn" style="max-width: 180px; padding: 0.8rem;" onclick="closeMemberModalDirect()">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="poem-modal" class="modal-overlay hidden" onclick="closePoemModal(event)">
+        <div class="poem-modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal-btn" onclick="closePoemModalDirect()">&times;</button>
+            <h2 id="poem-modal-title" style="color: var(--ddlc-deep-pink); font-size: 2rem; margin-bottom: 0.5rem;">Judul Puisi</h2>
+            <span id="poem-modal-author" style="font-weight: 700; color: var(--ddlc-purple); display: block; font-size: 1.1rem; margin-bottom: 1rem;">Penulis</span>
+            <div id="poem-modal-container" style="display: flex; justify-content: center; align-items: center; margin-top: 1rem;">
+                <img id="poem-modal-img" src="" alt="Poem Zoom Image" style="max-height: 65vh; max-width: 100%; object-fit: contain; border-radius: 12px; border: 2px solid var(--ddlc-border);">
+                <div id="poem-modal-text-fallback" class="hidden" style="font-family: 'Courier Prime', monospace; font-size: 1.1rem; white-space: pre-line; text-align: left; background: #fff9fa; padding: 1.5rem; border-radius: 12px; border: 2px dashed var(--ddlc-border); max-height: 60vh; overflow-y: auto; width: 100%;"></div>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <button class="submit-btn" style="max-width: 180px; padding: 0.8rem;" onclick="closePoemModalDirect()">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Gisella Andrian (Inspired DDLC Theme). Just Monika. 💚</p>
+    </footer>
+
+    <script>
+        let isLoginMode = false;
+
+        const memberData = {
+            monika: {
+                name: "Monika",
+                role: "Club President 💚",
+                art: "https://cdn.prod.website-files.com/61166a7cfab35c1054c77494/61166a7cfab35cb032c774e2_Monika-hc-724.png",
+                desc: "Monika, the superstar President of the Literature Club, will keep you on track for a perfect ending. Monika is always there to give you a guiding hand, both in literature and in love!"
+            },
+            sayori: {
+                name: "Sayori",
+                role: "Vice President 💙",
+                art: "https://cdn.prod.website-files.com/61166a7cfab35c725ac774a8/61166a7cfab35c78c1c7758c_Sayori-hc-724.png",
+                desc: "Sayori, as a daydreamer full of positive energy, Sayori’s greatest passion is to deliver happiness to others."
+            },
+            natsuki: {
+                name: "Natsuki",
+                role: "Manga Expert 🩷",
+                art: "https://cdn.prod.website-files.com/61166a7cfab35c725ac774a8/61166a7cfab35c5164c7756b_Natsuki-hc-724.png",
+                desc: "Natsuki tries to act tough, but her cuteness can make it hard to take her too seriously! She might be willing to warm up to good listeners who can respect her love for cute things."
+            },
+            yuri: {
+                name: "Yuri",
+                role: "Bookworm 💜",
+                art: "https://cdn.prod.website-files.com/61166a7cfab35c725ac774a8/61166a7cfab35c91e4c7758b_Yuri-hc-724.png",
+                desc: "Yuri, the quiet bookworm, reserves her passionate side for those who can more deeply understand her enigmatic mind."
+            }
+        };
+
+        const defaultPoems = [
+            {
+                id: 'monika',
+                title: "Happy End",
+                author: "By: Monika",
+                image: "https://static.wikia.nocookie.net/doki-doki-literature-club/images/e/ed/Poem_monika3.png",
+                content: "The happiness I found inside,\nIs shared with every word I write.\nWill you write a poem for me?\nLet's create a wonderful future together.",
+                badgeColor: "rgb(79, 184, 58)"
+            },
+            {
+                id: 'sayori',
+                title: "Dear Sunshine",
+                author: "By: Sayori",
+                image: "https://static.wikia.nocookie.net/doki-doki-literature-club/images/7/7b/Poem_sayori3.png",
+                content: "The way you glow through my blinds in the morning,\nIt makes me feel like you missed me.\nKissing my forehead to help me out of bed.\nMaking me rub the sleepy from my eyes.",
+                badgeColor: "hsl(207, 81%, 61%)"
+            },
+            {
+                id: 'natsuki',
+                title: "Eagles Can Fly",
+                author: "By: Natsuki",
+                image: "https://static.wikia.nocookie.net/doki-doki-literature-club/images/0/05/Poem_natsuki3.png",
+                content: "Monkeys can climb\nCrickets can leap\nHorses can race\nOwls can sleep\nEagles can fly\nPeople can try\nBut that's about it.",
+                badgeColor: "#d81b60"
+            },
+            {
+                id: 'yuri',
+                title: "Ghost Under The Light",
+                author: "By: Yuri",
+                image: "https://static.wikia.nocookie.net/doki-doki-literature-club/images/b/b8/Poem_yuri3.png",
+                content: "The tendrils of my hair illuminate beneath the amber glow.\nBathing.\nIt must be this one.\nThe last remaining streetlight to have withstood the test of time.",
+                badgeColor: "hsl(273, 62%, 56%)"
+            }
+        ];
+
+        function openMemberModal(characterKey) {
+            const data = memberData[characterKey];
+            if (!data) return;
+
+            document.getElementById('modal-name').innerText = data.name;
+            document.getElementById('modal-role').innerText = data.role;
+            document.getElementById('modal-art').src = data.art;
+            document.getElementById('modal-description').innerText = data.desc;
+
+            document.getElementById('member-modal').classList.remove('hidden');
+        }
+
+        function closeMemberModalDirect() {
+            document.getElementById('member-modal').classList.add('hidden');
+        }
+
+        function closeMemberModal(event) {
+            document.getElementById('member-modal').classList.add('hidden');
+        }
+
+        function openPoemModalById(poemId) {
+            let customPoems = JSON.parse(localStorage.getItem('ddlc_custom_poems')) || [];
+            let allPoems = [...defaultPoems, ...customPoems];
+            
+            const poem = allPoems.find(p => p.id === poemId);
+            if (!poem) return;
+
+            document.getElementById('poem-modal-title').innerText = poem.title;
+            document.getElementById('poem-modal-author').innerText = poem.author;
+
+            const imgEl = document.getElementById('poem-modal-img');
+            const textFallbackEl = document.getElementById('poem-modal-text-fallback');
+
+            if (poem.image) {
+                imgEl.src = poem.image;
+                imgEl.classList.remove('hidden');
+                textFallbackEl.classList.add('hidden');
+            } else {
+                textFallbackEl.innerText = poem.content;
+                textFallbackEl.classList.remove('hidden');
+                imgEl.classList.add('hidden');
+            }
+
+            document.getElementById('poem-modal').classList.remove('hidden');
+        }
+
+        function closePoemModalDirect() {
+            document.getElementById('poem-modal').classList.add('hidden');
+        }
+
+        function closePoemModal(event) {
+            document.getElementById('poem-modal').classList.add('hidden');
+        }
+
+        function renderPoemsGallery() {
+            const container = document.getElementById('poems-grid-container');
+            let customPoems = JSON.parse(localStorage.getItem('ddlc_custom_poems')) || [];
+            let allPoems = [...defaultPoems, ...customPoems];
+
+            let html = '';
+            allPoems.forEach(poem => {
+                let thumbContent = '';
+                if (poem.image) {
+                    thumbContent = `<img src="${poem.image}" alt="${escapeHtml(poem.title)}">`;
+                } else {
+                    thumbContent = `<div style="padding: 1rem; text-align: left; font-family: 'Courier Prime', monospace; font-size: 0.95rem; color: #555; width: 100%; height: 100%; overflow: hidden;"><strong>${escapeHtml(poem.title)}</strong><br><br>${escapeHtml(poem.content.substring(0, 90))}...</div>`;
+                }
+
+                html += `
+                    <div class="poem-card-item" onclick="openPoemModalById('${poem.id}')">
+                        <div class="poem-thumb-container">
+                            ${thumbContent}
+                        </div>
+                        <h3 style="color: var(--ddlc-deep-pink); font-size: 1.3rem;">${escapeHtml(poem.title)}</h3>
+                        <span style="font-size: 0.85rem; color: ${poem.badgeColor || 'var(--ddlc-purple)'}; font-weight: 700;">${escapeHtml(poem.author)}</span>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function handleUploadPoem(event) {
+            event.preventDefault();
+            const title = document.getElementById('new-poem-title').value;
+            const author = document.getElementById('new-poem-author').value;
+            const content = document.getElementById('new-poem-content').value;
+
+            const newPoem = {
+                id: 'custom_' + Date.now(),
+                title: title,
+                author: 'By: ' + author,
+                image: null,
+                content: content,
+                badgeColor: 'var(--ddlc-deep-pink)'
+            };
+
+            let customPoems = JSON.parse(localStorage.getItem('ddlc_custom_poems')) || [];
+            customPoems.push(newPoem);
+            localStorage.setItem('ddlc_custom_poems', JSON.stringify(customPoems));
+
+            renderPoemsGallery();
+            event.target.reset();
+            
+            const savedName = localStorage.getItem('ddlc_name');
+            if (savedName) {
+                document.getElementById('new-poem-author').value = savedName;
+            }
+
+            alert('Puisi berhasil di-upload dan ditambahkan ke bagian Poems! ✨');
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function showSection(sectionId) {
+            document.getElementById('section-landing').classList.add('hidden');
+            document.getElementById('section-main').classList.add('hidden');
+            document.getElementById('section-poems').classList.add('hidden');
+            document.getElementById('section-members').classList.add('hidden');
+
+            if (sectionId === 'home') {
+                const registeredUser = localStorage.getItem('ddlc_user');
+                if (registeredUser) {
+                    document.getElementById('section-main').classList.remove('hidden');
+                } else {
+                    document.getElementById('section-landing').classList.remove('hidden');
+                }
+            } else if (sectionId === 'poems') {
+                document.getElementById('section-poems').classList.remove('hidden');
+                renderPoemsGallery();
+            } else if (sectionId === 'members') {
+                document.getElementById('section-members').classList.remove('hidden');
+            }
+        }
+
+        function checkAuthStatus() {
+            const registeredUser = localStorage.getItem('ddlc_user');
+            const authSlot = document.getElementById('auth-nav-slot');
+            const savedName = localStorage.getItem('ddlc_name');
+            const authorInput = document.getElementById('new-poem-author');
+
+            if (registeredUser) {
+                authSlot.innerHTML = `<button class="nav-link-btn" onclick="handleLogout()">Log Out</button>`;
+                if (savedName && authorInput) {
+                    authorInput.value = savedName;
+                }
+            } else {
+                authSlot.innerHTML = `<button class="nav-link-btn" onclick="openLoginNav()">Log In</button>`;
+            }
+        }
+
+        function openLoginNav() {
+            showSection('home');
+            toggleAuthMode(null, 'login');
+        }
+
+        function toggleAuthMode(event, mode) {
+            if (event) event.preventDefault();
+            const title = document.getElementById('form-title');
+            const groupName = document.getElementById('group-name');
+            const submitBtn = document.getElementById('form-submit-btn');
+            const switchText = document.getElementById('switch-text');
+
+            if (mode === 'login') {
+                isLoginMode = true;
+                title.innerText = "Masuk Klub 🔑";
+                groupName.classList.add('hidden');
+                document.getElementById('nama').required = false;
+                submitBtn.innerText = "Masuk ✨";
+                switchText.innerHTML = `Belum punya akun? <a href="#" onclick="toggleAuthMode(event, 'register')">Daftar sekarang</a>`;
+            } else {
+                isLoginMode = false;
+                title.innerText = "Klub Pendaftaran 📝";
+                groupName.classList.remove('hidden');
+                document.getElementById('nama').required = true;
+                submitBtn.innerText = "Gabung ke Klub ✨";
+                switchText.innerHTML = `Sudah terdaftar? <a href="#" onclick="toggleAuthMode(event, 'login')">Masuk di sini</a>`;
+            }
+        }
+
+        function handleAuth(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const nama = isLoginMode ? (localStorage.getItem('ddlc_name') || "Member") : document.getElementById('nama').value;
+
+            localStorage.setItem('ddlc_user', email);
+            localStorage.setItem('ddlc_name', nama);
+
+            document.getElementById('welcome-user').innerText = `Halo, Selamat Datang ${nama}! 🌸`;
+            checkAuthStatus();
+            showSection('home');
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('ddlc_user');
+            checkAuthStatus();
+            toggleAuthMode(null, 'register');
+            showSection('home');
+        }
+
+        window.onload = function() {
+            const registeredUser = localStorage.getItem('ddlc_user');
+            const savedName = localStorage.getItem('ddlc_name') || "Member";
+            if (registeredUser) {
+                document.getElementById('welcome-user').innerText = `Halo, Selamat Datang ${savedName}! 🌸`;
+                showSection('home');
+            }
+            checkAuthStatus();
+            renderPoemsGallery();
+        };
+
+        const canvas = document.getElementById('interactive-bg');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(x, y, isClickEffect = false) {
+                this.x = x;
+                this.y = y;
+                this.size = isClickEffect ? Math.random() * 12 + 6 : Math.random() * 7 + 3;
+                this.speedX = isClickEffect ? (Math.random() - 0.5) * 6 : (Math.random() - 0.5) * 1;
+                this.speedY = isClickEffect ? (Math.random() - 0.5) * 6 : (Math.random() * 1 + 0.5);
+                this.color = ['#ff69b4', '#ffe4e1', '#d81b60', '#9c27b0'][Math.floor(Math.random() * 4)];
+                this.alpha = Math.random() * 0.6 + 0.3;
+                this.isClickEffect = isClickEffect;
+                this.life = isClickEffect ? 100 : 1200;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (!this.isClickEffect && this.y > height) {
+                    this.y = -10;
+                    this.x = Math.random() * width;
+                }
+                if (this.isClickEffect) {
+                    this.life--;
+                    this.alpha -= 0.01;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(this.alpha, 0);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle(Math.random() * width, Math.random() * height));
+        }
+
+        window.addEventListener('click', (e) => {
+            for (let i = 0; i < 15; i++) {
+                particles.push(new Particle(e.clientX, e.clientY, true));
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.8) {
+                particles.push(new Particle(e.clientX + (Math.random() - 0.5) * 20, e.clientY + (Math.random() - 0.5) * 20, true));
+            }
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+
+                if (p.life <= 0 || p.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+
+            if (particles.length < 35) {
+                particles.push(new Particle(Math.random() * width, -10));
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

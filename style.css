@@ -1,0 +1,496 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@500;700&display=swap');
+
+:root {
+    --ddlc-pink: #ff69b4;
+    --ddlc-light-pink: #ffe4e1;
+    --ddlc-deep-pink: #d81b60;
+    --ddlc-purple: #9c27b0;
+    --ddlc-bg: #fff0f5;
+    --ddlc-border: #f8bbd0;
+    --text-dark: #4a235a;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+body {
+    background-color: var(--ddlc-bg);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#interactive-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 4rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 4px solid var(--ddlc-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ddlc-deep-pink);
+    letter-spacing: 1px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+nav a, nav button.nav-link-btn {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+nav a:hover, nav button.nav-link-btn:hover {
+    color: var(--ddlc-pink);
+}
+
+main {
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    color: var(--ddlc-deep-pink);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    text-shadow: 2px 2px var(--ddlc-light-pink);
+}
+
+.hero-content h1 span {
+    color: var(--ddlc-purple);
+    background: var(--ddlc-light-pink);
+    padding: 0 12px;
+    border-radius: 10px;
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+}
+
+.poem-box {
+    background: #fff;
+    border: 3px solid var(--ddlc-border);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(216, 27, 96, 0.1);
+    font-family: 'Courier Prime', monospace;
+    font-size: 1.1rem;
+    color: #555;
+    position: relative;
+}
+
+.poem-box::before {
+    content: "Poem.txt";
+    position: absolute;
+    top: -12px;
+    left: 25px;
+    background: var(--ddlc-pink);
+    color: white;
+    font-size: 0.85rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.card-form {
+    background: #ffffff;
+    border: 5px solid var(--ddlc-pink);
+    padding: 3rem;
+    border-radius: 25px;
+    box-shadow: 0 20px 45px rgba(255, 105, 180, 0.25);
+    position: relative;
+}
+
+.card-form h2 {
+    color: var(--ddlc-deep-pink);
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 1.8rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    border: 3px solid var(--ddlc-border);
+    background-color: #fff9fa;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--ddlc-pink);
+    background-color: #fff;
+    box-shadow: 0 0 12px rgba(255, 105, 180, 0.35);
+}
+
+button.submit-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: linear-gradient(135deg, var(--ddlc-pink), var(--ddlc-deep-pink));
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(216, 27, 96, 0.35);
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+button.submit-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.switch-auth {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+}
+
+.switch-auth a {
+    color: var(--ddlc-deep-pink);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.switch-auth a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.chibi-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
+}
+
+.chibi-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid var(--ddlc-border);
+    border-radius: 20px;
+    padding: 1rem;
+    text-align: center;
+    width: 130px;
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.chibi-card:hover {
+    transform: translateY(-8px);
+}
+
+.chibi-card img {
+    width: 80px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.chibi-card span {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ddlc-deep-pink);
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.member-item-card {
+    background: #ffffff;
+    border: 4px solid var(--ddlc-border);
+    border-radius: 20px;
+    padding: 2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.15);
+    transition: all 0.3s ease;
+}
+
+.member-item-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--ddlc-pink);
+    box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+}
+
+.member-item-card img {
+    width: 100px;
+    height: 110px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
+}
+
+.member-item-card:hover img {
+    transform: scale(1.1);
+}
+
+.poems-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.poem-card-item {
+    background: #ffffff;
+    border: 4px solid var(--ddlc-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.15);
+    transition: all 0.3s ease;
+}
+
+.poem-card-item:hover {
+    transform: translateY(-8px);
+    border-color: var(--ddlc-pink);
+    box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+}
+
+.poem-thumb-container {
+    width: 100%;
+    height: 320px;
+    background: #fdfbf7;
+    border: 2px solid var(--ddlc-border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 10px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
+}
+
+.poem-thumb-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.poem-card-item:hover .poem-thumb-container img {
+    transform: scale(1.03);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(74, 35, 90, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: #ffffff;
+    border: 5px solid var(--ddlc-pink);
+    border-radius: 30px;
+    width: 900px;
+    max-width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2rem;
+    padding: 3rem 2.5rem;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(216, 27, 96, 0.3);
+    animation: scaleUp 0.3s ease;
+    align-items: center;
+}
+
+.modal-image-side {
+    text-align: center;
+    background: var(--ddlc-light-pink);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 3px dashed var(--ddlc-border);
+}
+
+.modal-image-side img {
+    max-height: 380px;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+}
+
+.modal-info-side h2 {
+    font-size: 2.5rem;
+    color: var(--ddlc-deep-pink);
+    margin-bottom: 0.5rem;
+}
+
+.modal-role {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ddlc-purple);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.modal-desc {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+}
+
+.poem-modal-content {
+    background: #ffffff;
+    border: 5px solid var(--ddlc-pink);
+    border-radius: 30px;
+    width: 700px;
+    max-width: 90%;
+    padding: 3rem 2rem 2rem 2rem;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(216, 27, 96, 0.3);
+    animation: scaleUp 0.3s ease;
+    text-align: center;
+}
+
+.poem-modal-content img {
+    max-height: 70vh;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 2px solid var(--ddlc-border);
+    margin-top: 1rem;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--ddlc-deep-pink);
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.2s;
+}
+
+.close-modal-btn:hover {
+    transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+footer {
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--ddlc-deep-pink);
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-top: 4px solid var(--ddlc-border);
+    background: rgba(255, 255, 255, 0.95);
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+        padding: 3rem 1.5rem;
+    }
+    .members-grid, .poems-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .modal-content {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .modal-image-side img {
+        max-height: 250px;
+    }
+    header {
+        padding: 1.2rem 2rem;
+    }
+}
